@@ -7,13 +7,18 @@
  table {
    margin: auto;
  }
- h1, h2 {
+ h1, h2,h3 {
   text-align: center;
+  color: green;
  }
 </style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
- <h1> AP EAPCET MOCK COUNSELLING 2021 </h1>
+ <h3> AP EAMCET MOCK COUNSELLING 2021 </h3>
  <section>
   <table class="selections">
     <tr>
@@ -21,7 +26,7 @@
     	<label for="rank">Rank <label> 
       </th>
       <td> 
-         <input id="rank" name="rank" type="number" min="1"  value="">
+         <input id="rank" class='form-control' name="rank" type="number" min="1"  value="">
       </td>
     </tr>
     <tr>
@@ -29,7 +34,7 @@
     	<label for="category">Category<label> 
       </th>
       <td> 
-        <select id="category" name="category">
+        <select id="category" class='form-control' name="category">
            
 			<option value="OC_BOYS">OC_BOYS</option>
 			<option value="OC_GIRLS">OC_GIRLS</option>
@@ -57,7 +62,7 @@
     	<label for="region">Region <label> 
       </th>
       <td> 
-        <select id="region" name="region">
+        <select id="region" class='form-control' name="region">
           <option value="">ALL Regions</option>
           <option value="AU">Andhra region</option>
           <option value="SVU" selected>SVU region</option>
@@ -70,7 +75,7 @@
     	<label for="university"> University<label> 
       </th>
       <td> 
-        <select id="university" name="university">
+        <select id="university" class='form-control' name="university">
        		<option value="">Select University</option>
             <option value="JNTUK">JNTUK </option>
 			<option value="AKNU">AKNU </option>
@@ -92,7 +97,7 @@
     	<label for="district">District <label> 
       </th>
       <td> 
-        <select id="district" name="district">
+        <select id="district" class='form-control' name="district">
             <option value="">Select District </option>
          	<option value="EG">East Goodavari </option>
 			<option value="GTR"> Gunter</option>
@@ -115,7 +120,7 @@
     	<label for="branch"> Branch <label> 
       </th>
       <td> 
-        <select id="branch" name="branch">
+        <select id="branch" class='form-control' name="branch">
            <option value="">ALL</option>
  			<option value="CIV">CIV</option>
  			<option value="CSE">CSE</option>
@@ -158,7 +163,7 @@
     	
       </th>
       <td> 
-        <button onClick="findColleges()"> Search colleges</button>
+        <button class="btn btn-primary" onClick="findColleges()"> Search colleges</button>
       </td>
    <table>
      
