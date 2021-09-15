@@ -42,7 +42,7 @@
     	<label for="category">Category<label> 
       </th>
       <td> 
-        <select id="category" class='form-control' name="category">
+        <select id="category" class='form-control' name="category" onchange="filterColleges()">
            
 			<option value="OC_BOYS">OC_BOYS</option>
 			<option value="OC_GIRLS">OC_GIRLS</option>
@@ -70,7 +70,7 @@
     	<label for="region">Region <label> 
       </th>
       <td> 
-        <select id="region" class='form-control' name="region">
+        <select id="region" class='form-control' name="region" onchange="filterColleges()">
           <option value="">ALL Regions</option>
           <option value="AU">Andhra region</option>
           <option value="SVU" selected>SVU region</option>
@@ -83,19 +83,19 @@
     	<label for="university"> University<label> 
       </th>
       <td> 
-        <select id="university" class='form-control' name="university">
+        <select id="university" class='form-control' name="university" onchange="filterColleges()">
        		<option value="">Select University</option>
-            <option value="JNTUK">JNTUK </option>
-			<option value="AKNU">AKNU </option>
-			<option value="AU">AU </option>
-			<option value="ANU">ANU </option>
-			<option value="KSUM">KSUM </option>
-			<option value="BRAU">BRAU </option>
-			<option value="JNTUA">JNTUA </option>
-			<option value="SKU">SKU </option>
-			<option value="SVU">SVU </option>
-			<option value="YGVU">YGVU </option>
-			<option value="RSUK">RSUK </option>
+                       <option value="JNTUK">JNTU Kakinada </option>
+			<option value="AKNU">ADI KAVI NANNAYA UNIVERSITY </option>
+			<option value="AU">Andhra University </option>
+			<option value="ANU">Acharya Nagarjuna University </option>
+			<option value="KSUM">KRISHNA UNIVERSITY</option>
+			<option value="BRAU">AMBEDKAR UNIV SELF FINANCE </option>
+			<option value="JNTUA">JNTU Anantapur </option>
+			<option value="SKU">Sri Krishna Devaraya University </option>
+			<option value="SVU">Sri Venkateswara University </option>
+			<option value="YGVU">Yogi Vemana University</option>
+			<option value="RSUK">RAYALASEEMA UNIVERSITY</option>
 		</select>         
 	  </td>
     </tr>
@@ -105,7 +105,7 @@
     	<label for="district">District <label> 
       </th>
       <td> 
-        <select id="district" class='form-control' name="district">
+        <select id="district" class='form-control' name="district" onchange="filterColleges()">
             <option value="">Select District </option>
          	<option value="EG">East Goodavari </option>
 			<option value="GTR"> Gunter</option>
@@ -120,6 +120,16 @@
 			<option value="KDP">Kadapa</option>
 			<option value="KNL">Kurnool</option>
 			<option value="NLR">Nellore</option>
+		 </select>         
+      </td>
+    </tr>
+	      <tr>
+      <th>
+    	<label for="college"> College <label> 
+      </th>
+      <td> 
+        <select class='form-control' id="college" name="college">
+
 		 </select>         
       </td>
     </tr>
@@ -199,7 +209,7 @@ var list3 = [{"inst_code":"AITT","inst_name":"ANNAMACHARYA INST OF TECHNOLOGYAND
    }
 
     //alert('allRanksList Length='+ allRanksList.length);
-    function findColleges(){
+   function findColleges(){
 
      var  district   = document.querySelector("#district").value ;
      var  university = document.querySelector("#university").value ;
@@ -208,6 +218,7 @@ var list3 = [{"inst_code":"AITT","inst_name":"ANNAMACHARYA INST OF TECHNOLOGYAND
      var  rank       = document.querySelector("#rank").value ;
      var  branch       = document.querySelector("#branch").value ;
      var  college_table  = document.querySelector("#college_table");
+    
      if(rank==""){
        alert("PLease enter your rank");
      } if(category && category.trim()==""){
@@ -219,10 +230,11 @@ var list3 = [{"inst_code":"AITT","inst_name":"ANNAMACHARYA INST OF TECHNOLOGYAND
  	    		(!!university ? obj["AFFILIATED_UNIVERSITY"] == university : true ) &&
  	     		(!!region ? obj["REG"] == region : true ) &&
  	     		(!!branch ? obj["branch_code"] == branch : true ) &&
+ 	     		(!!college_table.value ?  obj["inst_code"] == college_table.value : true) &&
  	     		obj[category] >= parseInt(rank);
  		 });
  		 var htmltable = "";
- 		 filteredList.sort(function(first, second){
+ 		 filteredList = filteredList.sort(function(first, second){
  		   return first[category] - second[category];
  		 });
  		 //alert('Length='+ filteredList.length);
@@ -236,7 +248,43 @@ var list3 = [{"inst_code":"AITT","inst_name":"ANNAMACHARYA INST OF TECHNOLOGYAND
  	 }
 
     }
-    
+     function filterColleges(){ 
+        var  district   = document.querySelector("#district").value ;
+        var  university = document.querySelector("#university").value ;
+        var  region     = document.querySelector("#region").value ;
+        var  category   = document.querySelector("#category").value ;
+        var  rank       = document.querySelector("#rank").value ;
+        var  branch       = document.querySelector("#branch").value ;
+        var  college_table  = document.querySelector("#college_table");
+        var  college_options  = document.querySelector("#college");
+        
+        var collegeOptions = "";
+        if(rank==""){
+      		 rank = "1";
+     	} if(category && category.trim()==""){
+      		 alert("PLease select Category");
+     	} else {
+ 	 		var filteredList = allRanksList.filter(function(obj){
+ 	 	    
+ 	   		return (!!district ? obj["DIST"] == district : true ) && 
+ 	    		(!!university ? obj["AFFILIATED_UNIVERSITY"] == university : true ) &&
+ 	     		(!!region ? obj["REG"] == region : true ) &&
+ 	     		(!!branch ? obj["branch_code"] == branch : true ) &&
+ 	     		obj[category] >= parseInt(rank);
+ 		   });
+ 		    filteredList = filteredList.sort(function(first, second){
+ 		        return first["inst_name"] - second["inst_name"];
+ 		    });
+ 		   collegeOptions += "<option value=''>ALL colleges</option>";
+ 		   filteredList.forEach(function(college) {
+ 		      if(!collegeOptions.includes(college["inst_name"])){
+ 		        collegeOptions += "<option value='"+ college["inst_code"] +"'>"+ college["inst_name"] +"</option>";
+ 		      }
+ 		   });
+ 		   college_options.innerHTML  = collegeOptions;
+        }
+     }
+    filterColleges();
     
  </script>
 </body>
