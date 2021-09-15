@@ -39,6 +39,22 @@
          <input id="rank" class='form-control' name="rank" type="number" min="1"  value="">
       </td>
     </tr>
+	<tr>
+      <th>
+    	<label for="lessCollegeFee">College Fee Less than (<=) <label> 
+      </th>
+      <td> 
+         <input id="lessCollegeFee" class='form-control' name="lessCollegeFee" type="number"  value="">
+      </td>
+    </tr>
+    <tr>
+      <th>
+    	<label for="greaterCollegeFee">College Greater than (>=) <label> 
+      </th>
+      <td> 
+         <input id="greaterCollegeFee"  class='form-control' name="greaterCollegeFee" type="number"  value="">
+      </td>
+    </tr>
     <tr>
       <th>
     	<label for="category">Category<label> 
@@ -220,6 +236,8 @@ var list3 = [{"inst_code":"AITT","inst_name":"ANNAMACHARYA INST OF TECHNOLOGYAND
      var  rank       = document.querySelector("#rank").value ;
      var  branch       = document.querySelector("#branch").value ;
      var  college_table  = document.querySelector("#college_table");
+     var lessCollegeFee = document.querySelector("#lessCollegeFee").value;
+     var greaterCollegeFee = document.querySelector("#greaterCollegeFee").value;
     
      if(rank==""){
        alert("PLease enter your rank");
@@ -233,7 +251,9 @@ var list3 = [{"inst_code":"AITT","inst_name":"ANNAMACHARYA INST OF TECHNOLOGYAND
  	     		(!!region ? obj["REG"] == region : true ) &&
  	     		(!!branch ? obj["branch_code"] == branch : true ) &&
  	     		(!!college_table.value ?  obj["inst_code"] == college_table.value : true) &&
- 	     		obj[category] >= parseInt(rank);
+ 	     		obj[category] >= parseInt(rank) &&
+ 	     		(!!lessCollegeFee ? obj["COLLFEE"] <= lessCollegeFee : true ) &&
+ 	     		(!!greaterCollegeFee ? obj["COLLFEE"] >= greaterCollegeFee : true ) ;
  		 });
  		 var htmltable = "";
  		 filteredList = filteredList.sort(function(first, second){
