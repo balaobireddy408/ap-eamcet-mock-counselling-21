@@ -20,6 +20,22 @@
  th {
 	padding: 10px;
  }
+  .arrow {
+    width:4px;
+    height:4px;
+    margin: 4px;
+    border: solid black;
+    display: inline-block;
+    border-width: 0px 2px 2px 0px;
+    padding: 2px;  
+    vertical-align: middle; 
+ }
+ .up {
+  transform: rotate(-135deg);
+ }
+ .down {
+  transform: rotate(45deg);
+ }
 </style>
 <title>AP EAMCET MOCK COUNSELLING FOR THE YEAR 2021</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -236,6 +252,7 @@ var list3 = [{"inst_code":"AITT","inst_name":"ANNAMACHARYA INST OF TECHNOLOGYAND
      var  rank       = document.querySelector("#rank").value ;
      var  branch       = document.querySelector("#branch").value ;
      var  college_table  = document.querySelector("#college_table");
+       var  college = document.querySelector("#college");
      var lessCollegeFee = document.querySelector("#lessCollegeFee").value;
      var greaterCollegeFee = document.querySelector("#greaterCollegeFee").value;
     
@@ -250,26 +267,76 @@ var list3 = [{"inst_code":"AITT","inst_name":"ANNAMACHARYA INST OF TECHNOLOGYAND
  	    		(!!university ? obj["AFFILIATED_UNIVERSITY"] == university : true ) &&
  	     		(!!region ? obj["REG"] == region : true ) &&
  	     		(!!branch ? obj["branch_code"] == branch : true ) &&
- 	     		(!!college_table.value ?  obj["inst_code"] == college_table.value : true) &&
+ 	     		(!!college.value ?  obj["inst_code"] == college.value : true) &&
  	     		obj[category] >= parseInt(rank) &&
  	     		(!!lessCollegeFee ? obj["COLLFEE"] <= lessCollegeFee : true ) &&
  	     		(!!greaterCollegeFee ? obj["COLLFEE"] >= greaterCollegeFee : true ) ;
  		 });
- 		 var htmltable = "";
- 		 filteredList = filteredList.sort(function(first, second){
+ 		 sortFilteredRecords(filteredList);
+ 		 
+ 		 setTimeout(function(){
+ 		    var feesort = document.querySelector("#feesort");
+ 		   feesort.addEventListener('click', function(event){
+ 		     
+ 		     if(document.querySelector("#feesort span").classList.contains('up')){
+ 		        var sortMethod = document.querySelector("#feesort span").classList;
+ 		        sortMethod.remove('arrow');
+ 		        sortMethod.remove('up');
+ 		        sortMethod.add('arrow');
+ 		        sortMethod.add('down');
+ 		        sortFilteredRecords(filteredList ,'down');
+ 		     } else {
+ 		        var sortMethod = document.querySelector("#feesort span").classList;
+ 		        sortMethod.remove('arrow');
+ 		        sortMethod.remove('down');
+ 		        sortMethod.add('arrow');
+ 		        sortMethod.add('up');
+ 		         sortFilteredRecords(filteredList ,'up');
+ 		     }
+ 		   });
+ 		 }, 1000);
+ 	 }
+
+    }//&#8593;
+     function sortFilteredRecords(filteredList, sortFun){
+       var  category   = document.querySelector("#category").value ;
+       var htmltable = "";
+       var  college_table  = document.querySelector("#college_table");
+       var  college_table_tbody  = document.querySelector("#college_table tbody");
+       if(sortFun === 'down'){
+         filteredList = filteredList.sort(function(first, second){
+ 		   return first['COLLFEE'] - second['COLLFEE'];
+ 		 });
+
+       } else if(sortFun === 'up') {
+         filteredList = filteredList.sort(function(first, second){
+ 		   return second['COLLFEE'] - first['COLLFEE'];
+ 		 });
+
+       } else {
+       	 filteredList = filteredList.sort(function(first, second){
  		   return first[category] - second[category];
  		 });
- 		 //alert('Length='+ filteredList.length);
- 		 htmltable = "<tr><th> College Code</th><th> College Name</th><th> Estb Year</th><th> Govt / Private / SF</th><th> Branch</th><th> Last Rank</th><th> College Fee</th></tr>";
- 		
+ 		 if(!college_table.innerHTML.includes('thead')){
+ 		    htmltable = "<thead><tr><th> College Code</th><th> College Name</th><th> Estb Year</th><th> Govt / Private / SF</th><th> Branch</th><th> Last Rank</th><th id='feesort'> College Fee <span></span> </th></tr></thead>";
+	     }
+       }
+
+ 	
  		 filteredList.forEach(function(college) {
  		    htmltable += "<tr><th>"+ college["inst_code"] +"</th><th>"+ college["inst_name"] + "</th><th>"+ college["ESTD"] + "</th><th>"+ college["type"] + "</th><th> "+ college["branch_code"] + "</th><th>"+ college[category] + "</th><th>"+ college["COLLFEE"] + "</th></tr>";
  		 });
  		 //alert(htmltable);
- 		 college_table.innerHTML  = htmltable;
- 	 }
-
-    }
+ 		 if(college_table.innerHTML.includes('thead')){
+ 		   college_table_tbody.innerHTML  = htmltable;
+ 		 } else {
+ 		   college_table.innerHTML  = htmltable;
+ 		 }
+ 		 
+ 		 
+ 		 
+       
+     }
      function filterColleges(){ 
         var  district   = document.querySelector("#district").value ;
         var  university = document.querySelector("#university").value ;
@@ -307,7 +374,7 @@ var list3 = [{"inst_code":"AITT","inst_name":"ANNAMACHARYA INST OF TECHNOLOGYAND
         }
      }
     filterColleges();
-    
  </script>
 </body>
 </html>
+
