@@ -352,9 +352,13 @@ var list3 = [{"inst_code":"AITT","inst_name":"ANNAMACHARYA INST OF TECHNOLOGYAND
  		 });
  		 //alert(htmltable);
  		 if(college_table.innerHTML.includes('thead')){
- 		   college_table_tbody.innerHTML  = htmltable;
+ 		   college_table.innerHTML  = htmltable;
  		 } else {
  		   college_table.innerHTML  = htmltable;
+ 		 }
+	         
+	      	 if(filteredList.length == 0) {
+ 		   college_table.innerHTML  =  "No colleges found for your rank. <br> Try to serach with some less rank as you may get better colleges this time";
  		 }
  		 
  		 
